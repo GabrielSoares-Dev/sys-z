@@ -1,16 +1,19 @@
+import { Button } from '../../components'
 import { useNavigate } from 'react-router-dom'
+import * as S from './styles'
 
 export function Home() {
   const navigate = useNavigate()
   return (
-    <div className="p-5">
-      <h1>Welcome to SYS-Z</h1>
-      <button
-        onClick={() => navigate('/dashboard')}
-        className="bg-blue-500 rounded p-3 text-white font-semibold"
-      >
-        Acessar dashboard
-      </button>
-    </div>
+    <S.Container>
+      <S.Title>Bem vindo ao SYS-Z</S.Title>
+      <S.Description>
+        Monitore todos os componentes do seu PC em tempo real. Tenha controle total do desempenho e
+        temperatura com nosso sistema intuitivo.
+      </S.Description>
+      <div className="w-80">
+        <Button onClick={() => navigate('/dashboard')}>Entrar</Button>
+      </div>
+    </S.Container>
   )
 }
