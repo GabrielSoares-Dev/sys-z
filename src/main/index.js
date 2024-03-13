@@ -2,7 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import si from 'systeminformation'
+import { getAllData } from 'systeminformation'
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -31,7 +31,6 @@ function createWindow() {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
-
 }
 
 app.whenReady().then(() => {
@@ -41,28 +40,39 @@ app.whenReady().then(() => {
   })
 
   ipcMain.on('request-system-info', async (event) => {
-    const [cpuData, gpuData,memoryData] = await Promise.all([
-          si.currentLoad(),
-          si.graphics(),
-          si.mem()
-    ]);
+    const { mem, memLayout, cpu: cpuData, currentLoad, graphics } = await getAllData()
 
-    const cpuUsage = cpuData.currentLoad.toFixed(2)
+    const cpuCurrentUsage = currentLoad.currentLoad.toFixed(2)
+    const cpuCurrentTemperature = await getAllData()
+
+    const cpu = {
+      name: cpuData.brand,
+      usage: cpuCurrentUsage,
+      temperature: cpuCurrentTemperature
+    }
+
+    const gpuData = graphics.controllers[0]
+
+    const gpu = {
+      name: gpuData.name,
+      usage: gpuData.utilizationGpu,
+      temperature: gpuData.temperatureGpu
+    }
 
     const memory = {
-      available: memoryData.available,
-      used: memoryData.used,
+      available: mem.available,
+      used: mem.used,
+      types: memLayout.map((value) => value.type)
     }
 
     const systemData = {
-      cpuUsage,
-      gpuData,
-      memoryData:memory
+      cpu,
+      gpu,
+      memory
     }
 
-    event.reply('system-info-data', systemData);
-    
-  });
+    event.reply('system-info-data', systemData)
+  })
   createWindow()
 
   app.on('activate', function () {
@@ -70,9 +80,6 @@ app.whenReady().then(() => {
   })
 })
 
-
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit() 
+  if (process.platform !== 'darwin') app.quit()
 })
-
-

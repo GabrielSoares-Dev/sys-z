@@ -23,7 +23,8 @@
     "bytes": "^3.1.2",
     "electron-updater": "^6.1.7",
     "react-router-dom": "^6.22.3",
-    "systeminformation": "^5.22.1"
+    "systeminformation": "^5.22.1",
+    "tailwind-styled-components": "^2.2.0"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config": "^1.0.2",
