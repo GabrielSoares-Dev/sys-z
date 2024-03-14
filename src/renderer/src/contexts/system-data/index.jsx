@@ -18,5 +18,7 @@ export const SystemDataContext = createContext({
     },
     disks: []
   },
-  setSystemData: () => {}
+  isLoadingToFirstRequest: false,
+  dataCaptured: false,
+  setIsLoadingToFirstRequest: () => {}
 })

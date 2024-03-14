@@ -1,25 +1,26 @@
 import { useState, useEffect } from 'react'
 
+const systemDataInitialState = {
+  cpu: {
+    name: '',
+    usage: 0
+  },
+  gpu: {
+    name: '',
+    usage: 0,
+    temperature: 0
+  },
+  memory: {
+    available: 0,
+    used: 0,
+    types: []
+  },
+  disks: []
+}
 export function useSystemDataProvider() {
-  const [systemData, setSystemData] = useState({
-    cpu: {
-      name: '',
-      usage: 0
-    },
-    gpu: {
-      name: '',
-      usage: 0,
-      temperature: 0
-    },
-    memory: {
-      available: 0,
-      used: 0,
-      types: []
-    },
-    disks: []
-  })
-
-  const requestSystemInfo = () => window.electron.ipcRenderer.send('request-system-info')
+  const [isLoadingToFirstRequest, setIsLoadingToFirstRequest] = useState(false)
+  const [dataCaptured, setDataCaptured] = useState(false)
+  const [systemData, setSystemData] = useState(systemDataInitialState)
 
   const getSystemData = () => {
     window.electron.ipcRenderer.on('system-info-data', (event, data) => {
@@ -27,7 +28,6 @@ export function useSystemDataProvider() {
         name: data.cpu.name,
         usage: data.cpu.usage
       }
-      console.log(data.cpu.test)
 
       const gpu = {
         name: data.gpu.name,
@@ -43,17 +43,17 @@ export function useSystemDataProvider() {
 
       const disks = data.disks
       setSystemData({ cpu, gpu, memory, disks })
+      setIsLoadingToFirstRequest(false)
+      setDataCaptured(true)
     })
   }
 
-  useEffect(() => {
-    getSystemData()
-
-    setInterval(requestSystemInfo, 10000)
-  }, [])
+  useEffect(() => getSystemData(), [])
 
   return {
     systemData,
-    setSystemData
+    isLoadingToFirstRequest,
+    dataCaptured,
+    setIsLoadingToFirstRequest
   }
 }
