@@ -1,4 +1,5 @@
 import tw from 'tailwind-styled-components'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
 export const Button = tw.button`
 flex
@@ -15,3 +16,9 @@ text-white
 font-semibold
 duration-300
  `
+
+export const Loading = tw(AiOutlineLoading3Quarters)`
+animate-spin
+fill-white
+text-base
+`

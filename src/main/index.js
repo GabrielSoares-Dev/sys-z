@@ -40,15 +40,14 @@ app.whenReady().then(() => {
   })
 
   ipcMain.on('request-system-info', async (event) => {
-    const { mem, memLayout, cpu: cpuData, currentLoad, graphics } = await getAllData()
+    const { mem, memLayout, cpu: cpuData, currentLoad, graphics, diskLayout } = await getAllData()
 
     const cpuCurrentUsage = currentLoad.currentLoad.toFixed(2)
-    const cpuCurrentTemperature = await getAllData()
 
     const cpu = {
       name: cpuData.brand,
       usage: cpuCurrentUsage,
-      temperature: cpuCurrentTemperature
+      test: await getAllData()
     }
 
     const gpuData = graphics.controllers[0]
@@ -64,11 +63,18 @@ app.whenReady().then(() => {
       used: mem.used,
       types: memLayout.map((value) => value.type)
     }
+    const disks = diskLayout.map((disk) => ({
+      name: disk.name,
+      vendor: disk.vendor,
+      size: disk.size,
+      type: disk.type
+    }))
 
     const systemData = {
       cpu,
       gpu,
-      memory
+      memory,
+      disks
     }
 
     event.reply('system-info-data', systemData)

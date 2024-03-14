@@ -1,9 +1,9 @@
-import { Button } from '../../components'
-import { useNavigate } from 'react-router-dom'
+import { Button } from '@components'
+import { useHome } from './hooks'
 import * as S from './styles'
 
 export function Home() {
-  const navigate = useNavigate()
+  const { isLoading, onEnter } = useHome()
   return (
     <S.Container>
       <S.Title>Bem vindo ao SYS-Z</S.Title>
@@ -12,7 +12,9 @@ export function Home() {
         temperatura com nosso sistema intuitivo.
       </S.Description>
       <div className="w-80">
-        <Button onClick={() => navigate('/dashboard')}>Entrar</Button>
+        <Button isLoading={isLoading} onClick={onEnter}>
+          Entrar
+        </Button>
       </div>
     </S.Container>
   )
