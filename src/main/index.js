@@ -2,7 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { getAllData } from 'systeminformation'
+import si from 'systeminformation'
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -40,44 +40,55 @@ app.whenReady().then(() => {
   })
 
   ipcMain.on('request-system-info', async (event) => {
-    const { mem, memLayout, cpu: cpuData, currentLoad, graphics, diskLayout } = await getAllData()
+    const [currentLoad, graphics, cpu, mem, memLayout, diskLayout] = await Promise.all([
+      si.currentLoad(),
+      si.graphics(),
+      si.cpu(),
+      si.mem(),
+      si.memLayout(),
+      si.diskLayout()
+    ])
 
     const cpuCurrentUsage = currentLoad.currentLoad.toFixed(2)
 
-    const cpu = {
-      name: cpuData.brand,
-      usage: cpuCurrentUsage,
-      test: await getAllData()
+    const replySystemData = () => {
+      const cpuData = {
+        name: cpu.brand,
+        usage: cpuCurrentUsage
+      }
+
+      const gpuData = graphics.controllers[0]
+
+      const gpu = {
+        name: gpuData.name,
+        usage: gpuData.utilizationGpu,
+        temperature: gpuData.temperatureGpu
+      }
+
+      const memory = {
+        available: mem.available,
+        used: mem.used,
+        types: memLayout.map((value) => value.type)
+      }
+      const disks = diskLayout.map((disk) => ({
+        name: disk.name,
+        vendor: disk.vendor,
+        size: disk.size,
+        type: disk.type
+      }))
+
+      const systemData = {
+        cpu: cpuData,
+        gpu,
+        memory,
+        disks
+      }
+      event.reply('system-info-data', systemData)
     }
+    replySystemData()
+    const INTERVAL = 5000 // five seconds
 
-    const gpuData = graphics.controllers[0]
-
-    const gpu = {
-      name: gpuData.name,
-      usage: gpuData.utilizationGpu,
-      temperature: gpuData.temperatureGpu
-    }
-
-    const memory = {
-      available: mem.available,
-      used: mem.used,
-      types: memLayout.map((value) => value.type)
-    }
-    const disks = diskLayout.map((disk) => ({
-      name: disk.name,
-      vendor: disk.vendor,
-      size: disk.size,
-      type: disk.type
-    }))
-
-    const systemData = {
-      cpu,
-      gpu,
-      memory,
-      disks
-    }
-
-    event.reply('system-info-data', systemData)
+    setInterval(replySystemData, INTERVAL)
   })
   createWindow()
 

@@ -3,7 +3,8 @@ import { useHome } from './hooks'
 import * as S from './styles'
 
 export function Home() {
-  const { isLoading, onEnter } = useHome()
+  const { isLoadingToFirstRequest, onEnter } = useHome()
+
   return (
     <S.Container>
       <S.Title>Bem vindo ao SYS-Z</S.Title>
@@ -12,7 +13,7 @@ export function Home() {
         temperatura com nosso sistema intuitivo.
       </S.Description>
       <div className="w-80">
-        <Button isLoading={isLoading} onClick={onEnter}>
+        <Button isLoading={isLoadingToFirstRequest} onClick={onEnter}>
           Entrar
         </Button>
       </div>
