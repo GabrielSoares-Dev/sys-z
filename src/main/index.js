@@ -39,7 +39,10 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  ipcMain.on('request-system-info', async (event) => {
+  //* ----- TESTE -----
+  //! Improvisação Técnica -> para sempre atualizar os dados
+  //TODO: Processador sofre? Se sim, encontrar outra solução...
+  const loadSystemData = async (event) => {
     const [currentLoad, graphics, cpu, mem, memLayout, diskLayout] = await Promise.all([
       si.currentLoad(),
       si.graphics(),
@@ -83,12 +86,16 @@ app.whenReady().then(() => {
         memory,
         disks
       }
+      console.log('CPU ::', cpuCurrentUsage)
       event.reply('system-info-data', systemData)
     }
     replySystemData()
-    const INTERVAL = 5000 // five seconds
+    const INTERVAL = 800 // 800 ms
+    setTimeout(async () => await loadSystemData(event), INTERVAL)
+  }
 
-    setInterval(replySystemData, INTERVAL)
+  ipcMain.on('request-system-info', async (event) => {
+    await loadSystemData(event)
   })
   createWindow()
 
