@@ -6,7 +6,7 @@ export function useNotificationProvider() {
   const { systemData } = useSystemData()
   const audioRef = useRef()
 
-  const maxCpuUsageToNotification = 71.0
+  const maxCpuUsageToNotification = 80.0
   const cpuUsage = systemData.cpu.usage
 
   const cpuUsageUltrappassed = cpuUsage >= maxCpuUsageToNotification
