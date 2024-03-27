@@ -12,7 +12,7 @@ export function useHome() {
   }
 
   useEffect(() => {
-    if (dataCaptured) navigate('/dashboard')
+    if (dataCaptured) navigate('/navigation')
   }, [dataCaptured])
 
   return {
