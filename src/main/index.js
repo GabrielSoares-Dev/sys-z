@@ -39,9 +39,6 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  //* ----- TESTE -----
-  //! Improvisação Técnica -> para sempre atualizar os dados
-  //TODO: Processador sofre? Se sim, encontrar outra solução...
   const loadSystemData = async (event) => {
     const [currentLoad, graphics, cpu, mem, memLayout, diskLayout] = await Promise.all([
       si.currentLoad(),
@@ -86,7 +83,6 @@ app.whenReady().then(() => {
         memory,
         disks
       }
-      console.log('CPU ::', cpuCurrentUsage)
       event.reply('system-info-data', systemData)
     }
     replySystemData()
