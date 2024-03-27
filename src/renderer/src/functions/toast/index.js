@@ -8,7 +8,7 @@ export const showToast = (input) => {
     theme: 'colored',
     type: input.type,
     transition: Slide,
-    autoClose: 7000
+    autoClose: 4000
   }
   toast(message, options)
 }
