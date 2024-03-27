@@ -15,6 +15,7 @@ export default defineConfig({
         '@renderer': resolve('src/renderer/src'),
         '@components': resolve('src/renderer/src/components'),
         '@contexts': resolve('src/renderer/src/contexts'),
+        '@functions': resolve('src/renderer/src/functions'),
         '@hooks': resolve('src/renderer/src/hooks'),
         '@pages': resolve('src/renderer/src/pages'),
         '@providers': resolve('src/renderer/src/providers'),
