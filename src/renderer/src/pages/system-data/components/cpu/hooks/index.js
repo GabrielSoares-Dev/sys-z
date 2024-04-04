@@ -1,0 +1,1 @@
+export { useCpu } from './useCpu'

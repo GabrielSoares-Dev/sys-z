@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Home, Dashboard, Navigation, CPU, GPU, Disks, Memory } from '@pages'
+import { Home, Navigation, CPU, GPU, Disks, Memory } from '@pages'
 
 export function Main() {
   return (
@@ -7,7 +7,6 @@ export function Main() {
       <Routes>
         <Route index element={<Home />} />
         <Route path="/navigation" element={<Navigation />} />
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/system-data/cpu" element={<CPU />} />
         <Route path="/system-data/gpu" element={<GPU />} />
         <Route path="/system-data/disks" element={<Disks />} />
