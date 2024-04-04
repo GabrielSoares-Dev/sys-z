@@ -13,7 +13,7 @@ export function Disks() {
   return diskData.length > 1 ? (
     <Layout>
       <S.Fieldset className="pb-8">
-        <S.Legend>Processor</S.Legend>
+        <S.Legend>Hard Disk</S.Legend>
         <S.Article>
           <S.Table>
             <S.Tbody>
