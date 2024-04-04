@@ -1,12 +1,12 @@
 export const cards = [
   {
     information: 'CPU',
-    background: 'bg-green-500',
+    background: 'bg-blue-500',
     navigateTo: '/system-data/cpu'
   },
   {
     information: 'GPU',
-    background: 'bg-blue-500',
+    background: 'bg-green-500',
     navigateTo: '/system-data/gpu'
   },
   {

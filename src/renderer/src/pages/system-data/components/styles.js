@@ -5,6 +5,9 @@ border-4
 pt-4
 pb-2
 flex
+flex-col
+items-center
+gap-8
 `
 
 export const Legend = tw.legend`

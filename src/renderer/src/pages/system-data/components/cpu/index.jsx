@@ -1,15 +1,15 @@
 import { useCpu } from './hooks'
-import { Logo as SVG } from './functions'
+import { Logo as SVG, chartData } from './functions'
 
 import { Layout } from '../layout'
-import { Spinner } from '@components'
+import { Spinner, ChartArea } from '@components'
 
 import * as S from '../styles'
 
 export function CPU() {
-  const { cpuData } = useCpu()
+  const { cpuData, cpuUsageArray } = useCpu()
 
-  return cpuData.length > 0 ? (
+  return cpuData.length > 1 ? (
     <Layout>
       <S.Fieldset>
         <S.Legend>Processor</S.Legend>
@@ -17,7 +17,7 @@ export function CPU() {
           <S.Table>
             <S.Tbody>
               {cpuData?.map(({ name, value }) => (
-                <S.Tr>
+                <S.Tr key={name}>
                   <S.Title>{name}</S.Title>
                   {parseFloat(value) ? (
                     <S.Description>{value} %</S.Description>
@@ -30,9 +30,10 @@ export function CPU() {
           </S.Table>
           <S.Logo src={SVG(cpuData[0]?.value)} alt="logo" />
         </S.Article>
+        <S.Article className="w-1/2">
+          <ChartArea data={chartData(cpuUsageArray)} title="CPU Usage" classList="w-full h-72" />
+        </S.Article>
       </S.Fieldset>
-
-      <S.Article></S.Article>
     </Layout>
   ) : (
     <Layout>
