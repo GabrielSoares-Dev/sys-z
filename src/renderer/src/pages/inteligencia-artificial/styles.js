@@ -1,11 +1,10 @@
-import tw from "tailwind-styled-components";
+import tw from 'tailwind-styled-components'
 
 export const Title = tw.h1`
 font-bold
 text-3xl
 text-center
 m-4
-
 [&>strong]:text-blue-500
 [&>strong]:text-4xl
 [&>strong]:italic
@@ -35,25 +34,23 @@ text-base
 max-w-[50%]
 break-words
 p-2
-rounded-tl-md
-rounded-tr-md
-rounded-bl-none
-rounded-br-md
 bg-blue-500
 text-white
-self-start
+rounded-tl-lg
+rounded-tr-lg
+${({ from }) => (from === 'user' ? 'rounded-br-none rounded-bl-lg' : 'rounded-bl-none rounded-br-lg')}
+${({ from }) => (from === 'user' ? 'self-end' : 'self-start')}
 `
 
 export const DateMsg = tw.span`
 absolute
 -bottom-4
-text-xs
-w-[400%]
-text-left
-left-0
-font-bold
 text-black
+text-xs
+font-bold
+w-[400%]
 italic
+${({ from }) => (from === 'user' ? 'text-right right-0' : 'text-left left-0')}
 `
 
 export const Input = tw.input`
@@ -68,6 +65,8 @@ cursor-pointer
 focus:cursor-text 
 focus:outline-2
 focus:outline-slate-400
+disabled:bg-slate-300
+disabled:cursor-not-allowed
 `
 
 export const Button = tw.button`
@@ -79,9 +78,6 @@ rounded-xl
 text-white
 bg-green-600
 hover:bg-green-700
-border: none;
-outline: none;
-margin-left: 0.3rem;
-height: 100%;
-cursor: pointer;
+disabled:bg-green-700
+disabled:cursor-not-allowed
 `
