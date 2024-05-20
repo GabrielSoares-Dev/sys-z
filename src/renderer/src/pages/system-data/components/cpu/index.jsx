@@ -20,9 +20,9 @@ export function CPU() {
                 <S.Tr key={name}>
                   <S.Title>{name}</S.Title>
                   {parseFloat(value) ? (
-                    <S.Description>{value} %</S.Description>
+                    <S.Description>{`${value} %` || 'Não identificado'}</S.Description>
                   ) : (
-                    <S.Description>{value}</S.Description>
+                    <S.Description>{value || 'Não identificado'}</S.Description>
                   )}
                 </S.Tr>
               ))}

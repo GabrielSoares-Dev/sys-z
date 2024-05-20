@@ -34,10 +34,10 @@ text-base
 max-w-[50%]
 break-words
 p-2
-bg-blue-500
 text-white
 rounded-tl-lg
 rounded-tr-lg
+${({ from }) => (from === 'user' ? 'bg-blue-500' : 'bg-cyan-500')}
 ${({ from }) => (from === 'user' ? 'rounded-br-none rounded-bl-lg' : 'rounded-bl-none rounded-br-lg')}
 ${({ from }) => (from === 'user' ? 'self-end' : 'self-start')}
 `
