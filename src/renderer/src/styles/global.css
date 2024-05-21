@@ -21,3 +21,12 @@ html {
   background-color: #7c7c7c;
   border-radius: 1rem;
 }
+
+.scrollbar::-webkit-scrollbar {
+  width: 5px;
+  background-color: rgb(241, 245, 249);
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color:#bdbcbc;
+  border-radius: 1rem;
+}

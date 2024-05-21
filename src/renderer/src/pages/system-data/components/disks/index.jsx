@@ -20,7 +20,7 @@ export function Disks() {
               {diskData?.map(({ name, value }) => (
                 <S.Tr key={name}>
                   <S.Title>{name}</S.Title>
-                  <S.Description>{value}</S.Description>
+                  <S.Description>{value || 'Não identificado'}</S.Description>
                 </S.Tr>
               ))}
             </S.Tbody>

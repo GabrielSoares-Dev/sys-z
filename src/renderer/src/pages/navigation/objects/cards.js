@@ -18,5 +18,10 @@ export const cards = [
     information: 'Discos',
     background: 'bg-purple-500',
     navigateTo: '/system-data/disks'
+  },
+  {
+    information: 'Inteligência Artificial',
+    background: 'bg-red-500',
+    navigateTo: '/inteligencia-artificial'
   }
 ]
