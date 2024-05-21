@@ -7,7 +7,9 @@ export function useGpu() {
   const [gpuUsageArray, setGpuUsageArray] = useState([parseFloat(gpu.usage)])
 
   const formatData = () => {
-    const formattedName = gpu.name.split(' ', [2]).join(' ')
+    const hasGpuName = !!gpu.name && gpu.name !== ''
+    const formattedName = hasGpuName ? gpu.name.split(' ', [2]).join(' ') : ''
+
     const data = { ...gpu, name: formattedName, specification: gpu.name }
     setGpuData([])
     Object.keys(data).forEach((key, i) => {
